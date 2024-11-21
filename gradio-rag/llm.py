@@ -78,6 +78,7 @@ normal_prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
+
 def create_indexes(collection_name: str, loader: BaseLoader, embedding_function: Optional[Embeddings] = None):
     db = Chroma(collection_name=collection_name,
                 embedding_function=embedding_function,
@@ -161,8 +162,7 @@ class MyKnowledge:
     print('__embeddings:',__embeddings)
 
     __retrievers = {}
-    # __llm = OpenAI(model_name="llama-3-chinese-8b-instruct-v3", temperature=0)
-    __llm = OpenAI(model_name="selfrag/selfrag_llama2_7b", temperature=0)
+    __llm = OpenAI(temperature=0)
 
     def upload_knowledge(self, temp_file):
         # 获取上传文件名的名称,不包括路径
@@ -284,15 +284,13 @@ class MyLLM(MyKnowledge):
         print('conversational_rag_chain:',conversational_rag_chain)
         return conversational_rag_chain
 
-    # def invoke(self, question, collection, model="gpt-3.5-turbo", max_length=256, temperature=1):
-    def invoke(self, question, collection, model="selfrag/selfrag_llama2_7b", max_length=256, temperature=1):
+    def invoke(self, question, collection, model="gpt-3.5-turbo", max_length=256, temperature=1):
         return self.get_chain(collection, model, max_length, temperature).invoke(
             {"input": question},
             {"configurable": {"session_id": "unused"}},
         )
 
-    # def stream(self, question, collection, model="gpt-3.5-turbo", max_length=256, temperature=1):
-    def stream(self, question, collection, model, max_length=256, temperature=1):
+    def stream(self, question, collection, model="gpt-3.5-turbo", max_length=256, temperature=1):
         return self.get_chain(collection, model, max_length, temperature).stream(
             {"input": question},
             {"configurable": {"session_id": "unused"}},

@@ -5,7 +5,7 @@ import gradio as gr
 from llm import MyLLM
 
 # 定义一个包含两个LLM模型名称的列表，供用户选择
-LLM_MODELS = ["gpt-3.5-turbo", "gpt-4o", "selfrag/selfrag_llama2_7b", "llama-3-chinese-8b-instruct-v3"]
+LLM_MODELS = ["gpt-3.5-turbo", "gpt-4o"]
 
 # 实例化MyLLM类，用于后续的模型调用和处理
 llm = MyLLM()
@@ -81,7 +81,7 @@ with gr.Blocks(fill_height=True) as demo:
             # 创建一个下拉菜单，用于选择LLM模型
             model = gr.Dropdown(
                 choices=LLM_MODELS,
-                value=LLM_MODELS[2],
+                value=LLM_MODELS[1],
                 label="LLM Model",
                 interactive=True,
                 scale=1
